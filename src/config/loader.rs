@@ -137,7 +137,6 @@ mod tests {
             let config_dir = home.join(".config/lyra");
             fs::create_dir_all(&config_dir).unwrap();
 
-            // 创建一个目录而不是文件，这样读取会失败
             let config_path = config_dir.join("config.toml");
             fs::create_dir(&config_path).unwrap();
 

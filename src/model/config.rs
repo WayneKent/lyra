@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::{fs, path::PathBuf};
+use std::path::PathBuf;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
@@ -7,6 +7,12 @@ pub struct MpdConfig {
     pub host: String,
     pub port: u16,
     pub password: String,
+}
+
+impl MpdConfig {
+    pub fn get_address(&self) -> String {
+        format!("{}:{}", self.host, self.port)
+    }
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
