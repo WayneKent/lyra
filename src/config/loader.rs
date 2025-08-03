@@ -122,10 +122,8 @@ mod tests {
             assert_eq!(config.mpd.password, "secret");
             assert_eq!(config.paths.music_dir.to_string_lossy(), "/custom/music");
             assert_eq!(config.paths.lyrics_dir.to_string_lossy(), "/custom/lyrics");
-            assert_eq!(config.lyric_style.font_size, 18);
             assert_eq!(config.lyric_style.color, "#FF0000");
             assert!(config.lyric_style.bold);
-            assert_eq!(config.lyric_style.current.font_size, 20);
             assert_eq!(config.lyric_style.current.color, "#00FF00");
             assert!(!config.lyric_style.current.bold);
         });

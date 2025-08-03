@@ -55,16 +55,38 @@ impl App {
 
         let lyrics = self.current_lyrics.as_ref().unwrap();
 
-        let mut new_offset = self.scroll_offset;
-        for (line_idx, line) in lyrics.lines.iter().enumerate() {
-            if line.timestamp <= current_play_time {
-                new_offset = line_idx;
-            } else {
-                break;
+        let target_offset = lyrics
+            .lines
+            .iter()
+            .enumerate()
+            .find(|(_, line)| line.timestamp > current_play_time)
+            .map_or(lyrics.lines.len().saturating_sub(1), |(i, _)| {
+                i.saturating_sub(1)
+            });
+
+        let diff = match self.scroll_offset < target_offset {
+            true => target_offset - self.scroll_offset,
+            false => self.scroll_offset - target_offset,
+        };
+
+        let step = match diff {
+            0 => 0,
+            1..=2 => 1,                            // 近距离小步滚动
+            3..=5 => 2,                            // 中等距离加速
+            _ => (diff as f32 * 0.3) as usize + 1, // 远距离大幅跳转（最多30%+1行）
+        };
+
+        if self.scroll_offset < target_offset {
+            self.scroll_offset += step;
+            if self.scroll_offset > target_offset {
+                self.scroll_offset = target_offset;
+            }
+        } else if self.scroll_offset > target_offset {
+            self.scroll_offset -= step;
+            if self.scroll_offset < target_offset {
+                self.scroll_offset = target_offset;
             }
         }
-
-        self.scroll_offset = new_offset;
         Ok(())
     }
 }

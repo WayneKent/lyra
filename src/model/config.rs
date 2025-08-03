@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
-
+use std::{
+    env::var,
+    path::{Path, PathBuf},
+};
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct MpdConfig {
@@ -8,7 +10,6 @@ pub struct MpdConfig {
     pub port: u16,
     pub password: String,
 }
-
 impl MpdConfig {
     pub fn get_address(&self) -> String {
         format!("{}:{}", self.host, self.port)
@@ -33,7 +34,6 @@ pub struct PathConfig {
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct LyricStyleConfig {
-    pub font_size: u16,
     pub color: String,
     pub bold: bool,
     pub current: LyricStateOverride,
@@ -42,12 +42,12 @@ pub struct LyricStyleConfig {
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct LyricStateOverride {
-    pub font_size: u16,
     pub color: String,
     pub bold: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, PartialEq)]
+#[serde(default)]
 pub struct Config {
     pub mpd: MpdConfig,
     pub paths: PathConfig,
@@ -66,8 +66,8 @@ impl Default for MpdConfig {
 
 impl From<RawPathConfig> for PathConfig {
     fn from(raw: RawPathConfig) -> Self {
-        let music_dir = raw.music_dir.unwrap_or_else(|| PathBuf::from("~/Music"));
-        let lyrics_dir = raw.lyrics_dir.unwrap_or_else(|| music_dir.clone());
+        let music_dir = expand_tilde(raw.music_dir.unwrap_or_else(|| PathBuf::from("~/Music")));
+        let lyrics_dir = expand_tilde(raw.lyrics_dir.unwrap_or_else(|| music_dir.clone()));
         Self {
             music_dir,
             lyrics_dir,
@@ -87,8 +87,7 @@ impl Default for PathConfig {
 impl Default for LyricStyleConfig {
     fn default() -> Self {
         Self {
-            font_size: 14,
-            color: "#FFFFFF".into(),
+            color: "#AAAAAA".into(),
             bold: false,
             current: LyricStateOverride::default(),
         }
@@ -98,10 +97,27 @@ impl Default for LyricStyleConfig {
 impl Default for LyricStateOverride {
     fn default() -> Self {
         Self {
-            font_size: 16,
-            color: "#FFFFFF".into(),
+            color: "#00FF7F".into(),
             bold: true,
         }
+    }
+}
+
+fn expand_tilde<P: AsRef<Path>>(path: P) -> PathBuf {
+    let path = path.as_ref();
+    if path.starts_with("~") {
+        if let Ok(home) = var("HOME") {
+            let home = PathBuf::from(home);
+            if path == Path::new("~") {
+                home
+            } else {
+                home.join(path.strip_prefix("~").unwrap())
+            }
+        } else {
+            path.to_path_buf()
+        }
+    } else {
+        path.to_path_buf()
     }
 }
 
@@ -138,12 +154,10 @@ mod tests {
     #[test]
     fn test_lyric_style_default() {
         let cfg = LyricStyleConfig::default();
-        assert_eq!(cfg.font_size, 14);
         assert_eq!(cfg.color, "#FFFFFF");
         assert!(!cfg.bold);
 
         let current = cfg.current;
-        assert_eq!(current.font_size, 16);
         assert_eq!(current.color, "#FFFFFF");
         assert!(current.bold);
     }
@@ -153,6 +167,5 @@ mod tests {
         let cfg = Config::default();
         assert_eq!(cfg.mpd.host, "127.0.0.1");
         assert_eq!(cfg.paths.music_dir, PathBuf::from("~/Music"));
-        assert_eq!(cfg.lyric_style.font_size, 14);
     }
 }
