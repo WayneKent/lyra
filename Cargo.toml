@@ -1,5 +1,5 @@
 [package]
-name = "lyra"
+name = "lyra-rs"
 version = "1.0.1"
 authors = ["WayneKent@yeah.net"]
 edition = "2024"
