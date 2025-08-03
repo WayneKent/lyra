@@ -52,7 +52,7 @@ _一个基于终端的MPD歌词显示工具，实时同步滚动显示歌词。�
 2. **直接安装**  
    执行以下命令从 crates.io 安装最新稳定版：
     ```bash
-     cargo install lyra
+     cargo install lyra-rs
     ```
 
 ### 从源码编译（开发者选项）
@@ -105,7 +105,7 @@ bold = true            # 当前播放歌词是否加粗
 2. 在终端中运行：
 
 ```bash
-lyra
+lyra-rs
 ```
 
 3. 操作说明:

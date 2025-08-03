@@ -52,7 +52,7 @@ _A terminal-based lyrics display tool for MPD that syncs and scrolls lyrics in r
 2. **Direct Installation**  
    Run the following command to install the latest stable version from crates.io:
     ```bash
-     cargo install lyra
+     cargo install lyra-rs
     ```
 
 ### Build from Source (Developer Option)
@@ -104,7 +104,7 @@ bold = true            # Whether to bold currently playing lyric
 1. Ensure MPD service is running and playing music
 2. Run in terminal:
     ```bash
-    lyra
+    lyra-rs
     ```
 3. **Key Controls**:
 
