@@ -2,7 +2,6 @@
 
 [English](docs/README.en.md) | [中文](#)
 
-_A terminal-based lyrics display tool for MPD that syncs and scrolls lyrics in real-time. Supports embedded lyrics in audio files and external LRC files._  
 _一个基于终端的MPD歌词显示工具，实时同步滚动显示歌词。支持音频文件内嵌歌词和外部LRC文件。_
 
 ---
@@ -35,20 +34,38 @@ _一个基于终端的MPD歌词显示工具，实时同步滚动显示歌词。�
 
 ---
 
+## 🖼️ 界面预览
+
+<p align="center">
+  <img src="docs/images/lyra.png" alt="Lyra 预览" width="60%">
+</p>
+
+---
+
 ## 📥 安装方法
 
-### 从源码编译
+### 从 crates.io 安装（推荐）
 
-1.  **环境准备**  
-    确保已安装 Rust 开发环境（推荐使用 [官方安装指南](https://www.rust-lang.org/tools/install)）
+1. **环境准备**  
+   确保已安装 Rust 开发环境（推荐使用 [官方安装指南](https://www.rust-lang.org/tools/install)）
+
+2. **直接安装**  
+   执行以下命令从 crates.io 安装最新稳定版：
+    ```bash
+     cargo install lyra
+    ```
+
+### 从源码编译（开发者选项）
+
+1. **克隆仓库**
 
     ```bash
     git clone https://github.com/WayneKent/lyra.git
     cd lyra
     ```
 
-2.  **编译安装**  
-    执行以下命令进行安装：
+2. **编译安装**  
+   执行以下命令进行安装：
 
     ```bash
     cargo install .
@@ -62,7 +79,6 @@ _一个基于终端的MPD歌词显示工具，实时同步滚动显示歌词。�
 `~/.config/lyra/config.toml`
 
 ```toml
-# ~/.config/lyra/config.toml
 [mpd]
 host = "127.0.0.1"     # MPD 服务器地址
 port = 6600            # MPD 服务器端口

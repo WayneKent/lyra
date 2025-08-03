@@ -1,14 +1,21 @@
 [package]
 name = "lyra"
-version = "0.1.0"
+version = "1.0.1"
+authors = ["WayneKent@yeah.net"]
 edition = "2024"
+description = "A terminal-based lyrics display tool for MPD that syncs and scrolls lyrics in real-time. Supports embedded lyrics in audio files and external LRC files. "
+license = "MIT"
+repository = "https://github.com/WayneKent/lyra"
+keywords = ["mpd", "lyrics", "terminal"]
+categories = ["command-line-utilities", "multimedia"]
+readme = "README.md"
 
 [dependencies]
 anyhow = "1.0.98"
 crossterm = "0.29.0"
 dirs = "6.0.0"
 lofty = "0.22.4"
-mpd = "*"
+mpd = "0.1.0"
 ratatui = { version = "0.30.0-alpha.5" }
 serde = { version = "1.0.219", features = ["derive"] }
 tempfile = "3.20.0"

@@ -34,21 +34,42 @@ _A terminal-based lyrics display tool for MPD that syncs and scrolls lyrics in r
 
 ---
 
-## 📥 Installation
+## 🖼️ Preview
 
-### Build from Source
+<p align="center">
+  <img src="images/lyra.png" alt="Lyra 预览" width="60%">
+</p>
+
+---
+
+## 📥 Installation Methods
+
+### Install from crates.io (Recommended)
 
 1. **Prerequisites**  
-   Ensure Rust development environment is installed (recommended [official guide](https://www.rust-lang.org/tools/install))
+   Ensure you have Rust installed (recommended to use the [official installation guide](https://www.rust-lang.org/tools/install))
+
+2. **Direct Installation**  
+   Run the following command to install the latest stable version from crates.io:
     ```bash
-    git clone git clone https://github.com/WayneKent/lyra.git
+     cargo install lyra
+    ```
+
+### Build from Source (Developer Option)
+
+1.  **Clone Repository**
+
+    ```bash
+    git clone https://github.com/WayneKent/lyra.git
     cd lyra
     ```
-2. **Build & Install**  
-    Execute the following command:
-   `bash
-cargo install --path .
-`
+
+2.  **Build and Install**  
+    Execute the following command to install:
+
+    ```bash
+    cargo install .
+    ```
 
 ---
 
@@ -58,23 +79,22 @@ Default configuration will be generated on first run. Configuration file path:
 `~/.config/lyra/config.toml`
 
 ```toml
-# ~/.config/lyra/config.toml
 [mpd]
-host = "127.0.0.1"     # MPD 服务器地址
-port = 6600            # MPD 服务器端口
-password = ""          # MPD 认证密码(如无密码可留空)
+host = "127.0.0.1"     # MPD server address
+port = 6600            # MPD server port
+password = ""          # MPD authentication password (leave empty if no password)
 
 [paths]
-music_dir = "~/Music"  # 音乐文件目录
-lyrics_dir = "~/Music" # 歌词文件目录(默认与音乐目录相同)
+music_dir = "~/Music"  # Music files directory
+lyrics_dir = "~/Music" # Lyrics files directory (defaults to same as music directory)
 
 [lyric_style]
-color = "#AAAAAA"      # 普通歌词颜色
-bold = false           # 普通歌词是否加粗
+color = "#AAAAAA"      # Normal lyrics color
+bold = false           # Whether to bold normal lyrics
 
 [lyric_style.current]
-color = "#00FF7F"      # 当前播放歌词颜色
-bold = true            # 当前播放歌词是否加粗
+color = "#00FF7F"      # Currently playing lyric color
+bold = true            # Whether to bold currently playing lyric
 ```
 
 ---
